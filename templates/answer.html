@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Answer - StudyMeta AI</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #2563eb;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .answer {
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .feedback {
+            margin-top: 20px;
+        }
+
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .dashboard-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>🤖 StudyMeta AI</h1>
+
+        <h2>Question</h2>
+
+        <p>{{ question }}</p>
+
+        <h2>AI Answer</h2>
+
+        <div class="answer">
+            {{ answer }}
+        </div>
+
+    </div>
+
+
+    <!-- FEEDBACK -->
+
+    <div class="card feedback">
+
+        <h2>⭐ Give Your Feedback</h2>
+
+        <form action="/feedback" method="POST">
+
+            <!-- Answer ID -->
+            <input type="hidden"
+                   name="answer_id"
+                   value="{{ answer_id }}">
+
+            <label>Rating</label>
+
+            <select name="rating" required>
+
+                <option value="">Select Rating</option>
+                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                <option value="4">⭐⭐⭐⭐ Good</option>
+                <option value="3">⭐⭐⭐ Average</option>
+                <option value="2">⭐⭐ Poor</option>
+                <option value="1">⭐ Very Poor</option>
+
+            </select>
+
+
+            <label>Comment</label>
+
+            <textarea
+                name="comment"
+                placeholder="Write your feedback..."
+                required></textarea>
+
+
+            <button type="submit">
+                Submit Feedback
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <a href="/dashboard" class="dashboard-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

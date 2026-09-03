@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Notes - StudyMeta AI</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #2563eb;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .notes {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>📚 StudyMeta AI Notes</h1>
+
+        <p>
+            Generate simple, exam-oriented notes using AI.
+        </p>
+
+        <form action="/notes" method="POST">
+
+            <label>Subject</label>
+
+            <input
+                type="text"
+                name="subject"
+                placeholder="Example: DBMS"
+                required
+            >
+
+            <label>Topic</label>
+
+            <input
+                type="text"
+                name="topic"
+                placeholder="Example: Normalization"
+                required
+            >
+
+            <button type="submit">
+                ✨ Generate Notes
+            </button>
+
+        </form>
+
+    </div>
+
+
+    {% if notes %}
+
+    <div class="card">
+
+        <h2>📖 {{ topic }} - {{ subject }}</h2>
+
+        <div class="notes">
+            {{ notes }}
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <a href="/dashboard" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

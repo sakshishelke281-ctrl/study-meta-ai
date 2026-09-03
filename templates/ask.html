@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ask AI - StudyMeta AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+        }
+
+        nav {
+            height: 70px;
+            background: #111827;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 7%;
+            border-bottom: 1px solid #263244;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .back {
+            text-decoration: none;
+            color: white;
+            background: #334155;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        .container {
+            width: 86%;
+            max-width: 850px;
+            margin: 70px auto;
+        }
+
+        .box {
+            background: #1e293b;
+            padding: 40px;
+            border-radius: 18px;
+            border: 1px solid #334155;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: white;
+            font-size: 16px;
+            resize: vertical;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #38bdf8;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #38bdf8;
+            color: #0f172a;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0ea5e9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">StudyMeta AI 🤖</div>
+
+        <a href="/dashboard" class="back">
+            ← Dashboard
+        </a>
+    </nav>
+
+    <div class="container">
+
+        <div class="box">
+
+            <h1>🤖 Ask StudyMeta AI</h1>
+
+            <p class="subtitle">
+                Ask your academic question and get a simple, exam-focused answer.
+            </p>
+
+            <form method="POST" action="/ask">
+
+                <textarea
+                    name="question"
+                    placeholder="Example: What is DBMS? Explain its advantages..."
+                    required></textarea>
+
+                <button type="submit">
+                    ✨ Get AI Answer
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

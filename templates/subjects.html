@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subjects - StudyMeta AI</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+        }
+
+        .subjects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .subject-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .subject-card h2 {
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        .topic {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            color: #444;
+        }
+
+        .back-btn {
+            display: block;
+            width: fit-content;
+            margin: 30px auto;
+            padding: 12px 25px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📚 Subjects & Topics</h1>
+
+    <div class="subjects-container">
+
+        {% for subject, topics in subjects.items() %}
+
+        <div class="subject-card">
+
+            <h2>📖 {{ subject }}</h2>
+
+            {% for topic in topics %}
+                <div class="topic">
+                    🔹 {{ topic }}
+                </div>
+            {% endfor %}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <a href="/dashboard" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</body>
+</html>
