@@ -1,11 +1,22 @@
 import requests
+import os
 
-# Ollama API
-OLLAMA_URL = "http://localhost:11434/api/generate"
 
-# AI Model
+# =========================================================
+# OLLAMA CONFIGURATION
+# =========================================================
+
+OLLAMA_URL = os.getenv(
+    "OLLAMA_URL",
+    "http://localhost:11434/api/generate"
+)
+
 MODEL_NAME = "phi"
 
+
+# =========================================================
+# GENERATE SYLLABUS ANSWER
+# =========================================================
 
 def get_syllabus_answer(question, topic_name=None, subject_name=None):
     """
@@ -31,11 +42,13 @@ INSTRUCTIONS:
 5. If it is an explanation, include important key points.
 6. Use bullet points wherever useful.
 7. Give one simple example if required.
+8. Do not give unnecessary information.
 
 ANSWER:
 """
 
     try:
+
         response = requests.post(
             OLLAMA_URL,
             json={
@@ -51,17 +64,37 @@ ANSWER:
         )
 
         if response.status_code == 200:
+
             result = response.json()
-            return result.get("response", "").strip()
+
+            answer = result.get("response", "").strip()
+
+            if answer:
+                return answer
+
+            return "⚠️ AI did not generate an answer."
 
         return f"⚠️ AI Error: {response.status_code}"
 
     except requests.exceptions.ConnectionError:
-        return "⚠️ Ollama is not running. Please start Ollama first."
+
+        return (
+            "⚠️ Ollama is not reachable. "
+            "Please make sure Ollama is running."
+        )
+
+    except requests.exceptions.Timeout:
+
+        return "⚠️ AI request timed out. Please try again."
 
     except Exception as e:
+
         return f"⚠️ AI service unavailable: {str(e)}"
 
+
+# =========================================================
+# GENERATE EXAM NOTES
+# =========================================================
 
 def get_exam_notes(topic_name, subject_name):
     """
@@ -69,20 +102,23 @@ def get_exam_notes(topic_name, subject_name):
     """
 
     prompt = f"""
-Create exam-oriented notes for:
+You are StudyMeta AI, an exam-oriented academic assistant.
 
-Topic: {topic_name}
+Create simple and exam-focused notes for:
+
 Subject: {subject_name}
+Topic: {topic_name}
 
-Format:
+Use this format:
 
 📌 DEFINITION:
-Give a clear definition.
+Give a clear and simple definition.
 
 📌 KEY POINTS:
 • Point 1
 • Point 2
 • Point 3
+• Point 4
 
 📌 IMPORTANT FOR EXAMS:
 • Important question 1
@@ -91,10 +127,15 @@ Give a clear definition.
 📌 SIMPLE EXAMPLE:
 Give one simple example.
 
-Keep the notes simple, short and exam-focused.
+Keep the notes:
+- Simple
+- Short
+- Easy to understand
+- Exam-focused
 """
 
     try:
+
         response = requests.post(
             OLLAMA_URL,
             json={
@@ -110,12 +151,26 @@ Keep the notes simple, short and exam-focused.
         )
 
         if response.status_code == 200:
-            return response.json().get("response", "").strip()
 
-        return "⚠️ Notes generation failed."
+            result = response.json()
+
+            notes = result.get("response", "").strip()
+
+            if notes:
+                return notes
+
+            return "⚠️ Notes could not be generated."
+
+        return f"⚠️ Notes generation failed: {response.status_code}"
 
     except requests.exceptions.ConnectionError:
-        return "⚠️ Ollama is not running."
+
+        return "⚠️ Ollama is not reachable. Please make sure Ollama is running."
+
+    except requests.exceptions.Timeout:
+
+        return "⚠️ Notes generation timed out. Please try again."
 
     except Exception as e:
+
         return f"⚠️ AI service unavailable: {str(e)}"
