@@ -1,157 +1,313 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AI Answer - StudyMeta AI</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
+        * {
             margin: 0;
-            padding: 40px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+        }
+
+        nav {
+            height: 70px;
+            background: #111827;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 7%;
+            border-bottom: 1px solid #263244;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .back {
+            text-decoration: none;
+            color: white;
+            background: #334155;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        .back:hover {
+            background: #475569;
         }
 
         .container {
-            max-width: 800px;
-            margin: auto;
+            width: 86%;
+            max-width: 1000px;
+            margin: 45px auto;
         }
 
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        .title {
+            margin-bottom: 25px;
         }
 
-        h1 {
-            color: #2563eb;
+        .title h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
         }
 
-        h2 {
-            color: #333;
+        .title p {
+            color: #94a3b8;
         }
 
-        .answer {
+        .question-box,
+        .answer-box,
+        .feedback-box {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 25px;
+        }
+
+        .question-box h2,
+        .answer-box h2,
+        .feedback-box h2 {
+            margin-bottom: 15px;
+        }
+
+        .question {
+            color: #cbd5e1;
+            font-size: 17px;
             line-height: 1.7;
-            white-space: pre-wrap;
         }
 
-        .feedback {
-            margin-top: 20px;
+        .answer-content {
+            color: #e2e8f0;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .answer-content h3 {
+            color: #38bdf8;
+            margin: 20px 0 10px;
+        }
+
+        .answer-content p {
+            margin-bottom: 10px;
+        }
+
+        .answer-content li {
+            margin: 8px 0 8px 22px;
+        }
+
+        .feedback-box label {
+            display: block;
+            margin: 15px 0 7px;
+            color: #cbd5e1;
         }
 
         select,
         textarea {
             width: 100%;
             padding: 12px;
-            margin-top: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
             border-radius: 8px;
-            box-sizing: border-box;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: white;
+            font-size: 15px;
         }
 
         textarea {
-            height: 100px;
+            min-height: 100px;
             resize: vertical;
         }
 
-        button {
-            background: #2563eb;
-            color: white;
+        .btn {
+            margin-top: 18px;
             border: none;
-            padding: 12px 25px;
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 12px 22px;
             border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
+            font-size: 15px;
         }
 
-        button:hover {
-            background: #1d4ed8;
+        .btn:hover {
+            background: #0ea5e9;
         }
 
-        .dashboard-btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: #333;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .container {
+                width: 92%;
+                margin: 30px auto;
+            }
+
+            .title h1 {
+                font-size: 28px;
+            }
+
+            .question-box,
+            .answer-box,
+            .feedback-box {
+                padding: 20px;
+            }
         }
     </style>
+
 </head>
 
 <body>
 
-<div class="container">
+    <nav>
 
-    <div class="card">
+        <div class="logo">
+            StudyMeta AI 🤖
+        </div>
 
-        <h1>🤖 StudyMeta AI</h1>
+        <a href="/dashboard" class="back">
+            ← Dashboard
+        </a>
 
-        <h2>Question</h2>
+    </nav>
 
-        <p>{{ question }}</p>
 
-        <h2>AI Answer</h2>
+    <div class="container">
 
-        <div class="answer">
-            {{ answer }}
+        <div class="title">
+
+            <h1>
+                🤖 AI Generated Answer
+            </h1>
+
+            <p>
+                Simple and exam-oriented explanation powered by AI.
+            </p>
+
+        </div>
+
+
+        <!-- QUESTION -->
+
+        <div class="question-box">
+
+            <h2>
+                ❓ Your Question
+            </h2>
+
+            <div class="question">
+                {{ question }}
+            </div>
+
+        </div>
+
+
+        <!-- AI ANSWER -->
+
+        <div class="answer-box">
+
+            <h2>
+                ✨ AI Answer
+            </h2>
+
+            <div class="answer-content">
+                {{ answer|safe }}
+            </div>
+
+        </div>
+
+
+        <!-- FEEDBACK -->
+
+        <div class="feedback-box">
+
+            <h2>
+                ⭐ Rate this Answer
+            </h2>
+
+            <form action="/feedback" method="POST">
+
+                <input
+                    type="hidden"
+                    name="answer_id"
+                    value="{{ answer_id }}"
+                >
+
+                <label>
+                    Rating
+                </label>
+
+                <select name="rating" required>
+
+                    <option value="">
+                        Select Rating
+                    </option>
+
+                    <option value="5">
+                        ⭐⭐⭐⭐⭐ Excellent
+                    </option>
+
+                    <option value="4">
+                        ⭐⭐⭐⭐ Good
+                    </option>
+
+                    <option value="3">
+                        ⭐⭐⭐ Average
+                    </option>
+
+                    <option value="2">
+                        ⭐⭐ Poor
+                    </option>
+
+                    <option value="1">
+                        ⭐ Very Poor
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Comment
+                </label>
+
+                <textarea
+                    name="comment"
+                    placeholder="Tell us about your experience..."
+                ></textarea>
+
+
+                <button
+                    type="submit"
+                    class="btn"
+                >
+                    Submit Feedback
+                </button>
+
+            </form>
+
         </div>
 
     </div>
 
-
-    <!-- FEEDBACK -->
-
-    <div class="card feedback">
-
-        <h2>⭐ Give Your Feedback</h2>
-
-        <form action="/feedback" method="POST">
-
-            <!-- Answer ID -->
-            <input type="hidden"
-                   name="answer_id"
-                   value="{{ answer_id }}">
-
-            <label>Rating</label>
-
-            <select name="rating" required>
-
-                <option value="">Select Rating</option>
-                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
-                <option value="4">⭐⭐⭐⭐ Good</option>
-                <option value="3">⭐⭐⭐ Average</option>
-                <option value="2">⭐⭐ Poor</option>
-                <option value="1">⭐ Very Poor</option>
-
-            </select>
-
-
-            <label>Comment</label>
-
-            <textarea
-                name="comment"
-                placeholder="Write your feedback..."
-                required></textarea>
-
-
-            <button type="submit">
-                Submit Feedback
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <a href="/dashboard" class="dashboard-btn">
-        ← Back to Dashboard
-    </a>
-
-</div>
-
 </body>
+
 </html>
