@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import psycopg2
 import os
+import re
+from markupsafe import Markup
 from werkzeug.security import generate_password_hash, check_password_hash
 from ai_helper import get_syllabus_answer, get_exam_notes
 
@@ -241,6 +243,75 @@ except Exception as e:
 
 
 # =========================================================
+# AI ANSWER FORMATTER
+# =========================================================
+
+def format_ai_answer(text):
+
+    if not text:
+        return ""
+
+    # Remove Markdown escape characters
+    text = text.replace("\\*\\*", "")
+    text = text.replace("**", "")
+    text = text.replace("\\*", "")
+    text = text.replace("---", "")
+
+    lines = text.split("\n")
+
+    formatted = []
+
+    for line in lines:
+
+        line = line.strip()
+
+        if not line:
+            formatted.append("<br>")
+            continue
+
+        # Heading
+        if line.startswith("#"):
+
+            line = line.lstrip("#").strip()
+
+            formatted.append(
+                f"<h3>{line}</h3>"
+            )
+
+        # Bullet points
+        elif line.startswith(("- ", "* ", "• ")):
+
+            line = line[2:].strip()
+
+            formatted.append(
+                f"<li>{line}</li>"
+            )
+
+        # Numbered points
+        elif re.match(r"^\d+\.\s", line):
+
+            line = re.sub(
+                r"^\d+\.\s",
+                "",
+                line
+            )
+
+            formatted.append(
+                f"<li>{line}</li>"
+            )
+
+        else:
+
+            formatted.append(
+                f"<p>{line}</p>"
+            )
+
+    return Markup(
+        "\n".join(formatted)
+    )
+
+
+# =========================================================
 # HOME
 # =========================================================
 
@@ -294,9 +365,13 @@ def register():
         cur.close()
         conn.close()
 
-        return redirect(url_for("login"))
+        return redirect(
+            url_for("login")
+        )
 
-    return render_template("register.html")
+    return render_template(
+        "register.html"
+    )
 
 
 # =========================================================
@@ -344,7 +419,9 @@ def login():
 
         return "Invalid email or password"
 
-    return render_template("login.html")
+    return render_template(
+        "login.html"
+    )
 
 
 # =========================================================
@@ -441,9 +518,20 @@ def ask():
 
         student_id = session["student_id"]
 
-        # Generate AI Answer
+        # -------------------------
+        # GENERATE AI ANSWER
+        # -------------------------
+
         answer = get_syllabus_answer(
             question
+        )
+
+        # -------------------------
+        # FORMAT AI ANSWER
+        # -------------------------
+
+        formatted_answer = format_ai_answer(
+            answer
         )
 
         conn = get_db_connection()
@@ -499,11 +587,13 @@ def ask():
         return render_template(
             "answer.html",
             question=question,
-            answer=answer,
+            answer=formatted_answer,
             answer_id=answer_id
         )
 
-    return render_template("ask.html")
+    return render_template(
+        "ask.html"
+    )
 
 
 # =========================================================
@@ -619,14 +709,20 @@ def notes():
             subject
         )
 
+        formatted_notes = format_ai_answer(
+            notes_content
+        )
+
         return render_template(
             "notes.html",
             topic=topic,
             subject=subject,
-            notes=notes_content
+            notes=formatted_notes
         )
 
-    return render_template("notes.html")
+    return render_template(
+        "notes.html"
+    )
 
 
 # =========================================================
