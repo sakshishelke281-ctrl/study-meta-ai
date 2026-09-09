@@ -1,27 +1,15 @@
 import requests
 import os
 
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-# =========================================================
-# OLLAMA CONFIGURATION
-# =========================================================
-
-OLLAMA_URL = os.getenv(
-    "OLLAMA_URL",
-    "http://localhost:11434/api/generate"
+GEMINI_URL = (
+    "https://generativelanguage.googleapis.com/v1beta/"
+    "models/gemini-2.0-flash:generateContent"
 )
 
-MODEL_NAME = "phi"
-
-
-# =========================================================
-# GENERATE SYLLABUS ANSWER
-# =========================================================
 
 def get_syllabus_answer(question, topic_name=None, subject_name=None):
-    """
-    Generate simple, exam-focused answer for students.
-    """
 
     context = ""
 
@@ -42,135 +30,103 @@ INSTRUCTIONS:
 5. If it is an explanation, include important key points.
 6. Use bullet points wherever useful.
 7. Give one simple example if required.
-8. Do not give unnecessary information.
 
 ANSWER:
 """
 
     try:
-
         response = requests.post(
-            OLLAMA_URL,
-            json={
-                "model": MODEL_NAME,
-                "prompt": prompt,
-                "stream": False,
-                "options": {
-                    "temperature": 0.3,
-                    "num_predict": 500
-                }
+            GEMINI_URL,
+            headers={
+                "Content-Type": "application/json",
+                "x-goog-api-key": GEMINI_API_KEY
             },
-            timeout=120
+            json={
+                "contents": [
+                    {
+                        "parts": [
+                            {
+                                "text": prompt
+                            }
+                        ]
+                    }
+                ]
+            },
+            timeout=60
         )
 
         if response.status_code == 200:
+            data = response.json()
 
-            result = response.json()
+            return (
+                data["candidates"][0]["content"]["parts"][0]["text"]
+                .strip()
+            )
 
-            answer = result.get("response", "").strip()
-
-            if answer:
-                return answer
-
-            return "⚠️ AI did not generate an answer."
-
-        return f"⚠️ AI Error: {response.status_code}"
-
-    except requests.exceptions.ConnectionError:
-
-        return (
-            "⚠️ Ollama is not reachable. "
-            "Please make sure Ollama is running."
-        )
-
-    except requests.exceptions.Timeout:
-
-        return "⚠️ AI request timed out. Please try again."
+        return f"⚠️ Gemini AI Error: {response.status_code}"
 
     except Exception as e:
-
         return f"⚠️ AI service unavailable: {str(e)}"
 
 
-# =========================================================
-# GENERATE EXAM NOTES
-# =========================================================
-
 def get_exam_notes(topic_name, subject_name):
-    """
-    Generate exam-oriented notes for a topic.
-    """
 
     prompt = f"""
-You are StudyMeta AI, an exam-oriented academic assistant.
+Create exam-oriented notes for:
 
-Create simple and exam-focused notes for:
-
-Subject: {subject_name}
 Topic: {topic_name}
+Subject: {subject_name}
 
-Use this format:
+Format:
 
-📌 DEFINITION:
-Give a clear and simple definition.
+DEFINITION:
+Give a clear definition.
 
-📌 KEY POINTS:
+KEY POINTS:
 • Point 1
 • Point 2
 • Point 3
-• Point 4
 
-📌 IMPORTANT FOR EXAMS:
+IMPORTANT FOR EXAMS:
 • Important question 1
 • Important question 2
 
-📌 SIMPLE EXAMPLE:
+SIMPLE EXAMPLE:
 Give one simple example.
 
-Keep the notes:
-- Simple
-- Short
-- Easy to understand
-- Exam-focused
+Keep the notes simple, short and exam-focused.
 """
 
     try:
-
         response = requests.post(
-            OLLAMA_URL,
-            json={
-                "model": MODEL_NAME,
-                "prompt": prompt,
-                "stream": False,
-                "options": {
-                    "temperature": 0.3,
-                    "num_predict": 500
-                }
+            GEMINI_URL,
+            headers={
+                "Content-Type": "application/json",
+                "x-goog-api-key": GEMINI_API_KEY
             },
-            timeout=120
+            json={
+                "contents": [
+                    {
+                        "parts": [
+                            {
+                                "text": prompt
+                            }
+                        ]
+                    }
+                ]
+            },
+            timeout=60
         )
 
         if response.status_code == 200:
+            data = response.json()
 
-            result = response.json()
+            return (
+                data["candidates"][0]["content"]["parts"][0]["text"]
+                .strip()
+            )
 
-            notes = result.get("response", "").strip()
-
-            if notes:
-                return notes
-
-            return "⚠️ Notes could not be generated."
-
-        return f"⚠️ Notes generation failed: {response.status_code}"
-
-    except requests.exceptions.ConnectionError:
-
-        return "⚠️ Ollama is not reachable. Please make sure Ollama is running."
-
-    except requests.exceptions.Timeout:
-
-        return "⚠️ Notes generation timed out. Please try again."
+        return "⚠️ Notes generation failed."
 
     except Exception as e:
-
         return f"⚠️ AI service unavailable: {str(e)}"
