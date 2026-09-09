@@ -1,148 +1,280 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AI Notes - StudyMeta AI</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
+        * {
             margin: 0;
-            padding: 40px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+        }
+
+        nav {
+            height: 70px;
+            background: #111827;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 7%;
+            border-bottom: 1px solid #263244;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .back {
+            text-decoration: none;
+            color: white;
+            background: #334155;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        .back:hover {
+            background: #475569;
         }
 
         .container {
-            max-width: 850px;
-            margin: auto;
+            width: 86%;
+            max-width: 1000px;
+            margin: 45px auto;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 16px;
         }
 
         .card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 25px;
         }
 
-        h1 {
-            color: #2563eb;
-        }
-
-        h2 {
-            color: #333;
+        .card h2 {
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
-            margin-top: 15px;
-            margin-bottom: 8px;
+            margin: 18px 0 8px;
+            color: #cbd5e1;
+            font-weight: bold;
         }
 
         input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
+            padding: 13px;
             border-radius: 8px;
-            box-sizing: border-box;
-        }
-
-        button {
-            margin-top: 20px;
-            background: #2563eb;
+            border: 1px solid #475569;
+            background: #0f172a;
             color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
+            outline: none;
         }
 
-        button:hover {
-            background: #1d4ed8;
+        input:focus {
+            border-color: #38bdf8;
+        }
+
+        .btn {
+            margin-top: 22px;
+            border: none;
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn:hover {
+            background: #0ea5e9;
+        }
+
+        .notes-header {
+            color: #38bdf8;
+            margin-bottom: 20px;
         }
 
         .notes {
-            margin-top: 20px;
-            padding: 20px;
-            background: #f8fafc;
-            border-radius: 10px;
-            line-height: 1.7;
-            white-space: pre-wrap;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 25px;
+            color: #e2e8f0;
+            line-height: 1.8;
+            font-size: 16px;
         }
 
-        .back-btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: #333;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
+        .notes h3 {
+            color: #38bdf8;
+            margin: 20px 0 10px;
+        }
+
+        .notes p {
+            margin-bottom: 10px;
+        }
+
+        .notes li {
+            margin: 8px 0 8px 22px;
+        }
+
+        .tip {
+            margin-top: 18px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .container {
+                width: 92%;
+                margin: 30px auto;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 20px;
+            }
         }
     </style>
+
 </head>
 
 <body>
 
-<div class="container">
+    <nav>
 
-    <div class="card">
-
-        <h1>📚 StudyMeta AI Notes</h1>
-
-        <p>
-            Generate simple, exam-oriented notes using AI.
-        </p>
-
-        <form action="/notes" method="POST">
-
-            <label>Subject</label>
-
-            <input
-                type="text"
-                name="subject"
-                placeholder="Example: DBMS"
-                required
-            >
-
-            <label>Topic</label>
-
-            <input
-                type="text"
-                name="topic"
-                placeholder="Example: Normalization"
-                required
-            >
-
-            <button type="submit">
-                ✨ Generate Notes
-            </button>
-
-        </form>
-
-    </div>
-
-
-    {% if notes %}
-
-    <div class="card">
-
-        <h2>📖 {{ topic }} - {{ subject }}</h2>
-
-        <div class="notes">
-            {{ notes }}
+        <div class="logo">
+            StudyMeta AI 🤖
         </div>
 
+        <a href="/dashboard" class="back">
+            ← Dashboard
+        </a>
+
+    </nav>
+
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>
+                📚 AI Study Notes
+            </h1>
+
+            <p>
+                Generate simple, exam-oriented notes for your important topics.
+            </p>
+
+        </div>
+
+
+        <!-- GENERATE NOTES -->
+
+        <div class="card">
+
+            <h2>
+                ✨ Generate Notes
+            </h2>
+
+            <form action="/notes" method="POST">
+
+                <label>
+                    Subject
+                </label>
+
+                <input
+                    type="text"
+                    name="subject"
+                    placeholder="Example: DBMS"
+                    required
+                >
+
+                <label>
+                    Topic
+                </label>
+
+                <input
+                    type="text"
+                    name="topic"
+                    placeholder="Example: Normalization"
+                    required
+                >
+
+                <button type="submit" class="btn">
+                    ✨ Generate Notes
+                </button>
+
+            </form>
+
+            <p class="tip">
+                💡 Tip: Enter a specific topic to get better exam-oriented notes.
+            </p>
+
+        </div>
+
+
+        {% if notes %}
+
+        <!-- GENERATED NOTES -->
+
+        <div class="card">
+
+            <h2 class="notes-header">
+                📖 {{ topic }} — {{ subject }}
+            </h2>
+
+            <div class="notes">
+                {{ notes|safe }}
+            </div>
+
+        </div>
+
+        {% endif %}
+
     </div>
 
-    {% endif %}
-
-
-    <a href="/dashboard" class="back-btn">
-        ← Back to Dashboard
-    </a>
-
-</div>
-
 </body>
+
 </html>
