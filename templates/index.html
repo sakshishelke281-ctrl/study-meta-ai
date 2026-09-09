@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>StudyMeta AI | Smart Study Assistant</title>
+    <title>Sakshi Shelke | Portfolio</title>
 
     <style>
         * {
@@ -153,6 +153,83 @@
             line-height: 1.5;
         }
 
+        /* ================= PROJECTS ================= */
+
+        .projects {
+            padding: 70px 8%;
+            background: #f5f7fb;
+            text-align: center;
+        }
+
+        .projects h2 {
+            font-size: 32px;
+            margin-bottom: 35px;
+        }
+
+        .project-card {
+            max-width: 850px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .project-card h3 {
+            font-size: 26px;
+            color: #4f46e5;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            color: #667085;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .tech {
+            margin-bottom: 25px;
+        }
+
+        .tech span {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 8px 12px;
+            border-radius: 20px;
+            margin: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .project-buttons a {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .github-btn {
+            background: #172033;
+            color: white;
+        }
+
+        .live-btn {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .github-btn:hover {
+            background: #000000;
+        }
+
+        .live-btn:hover {
+            background: #4338ca;
+        }
+
         footer {
             text-align: center;
             padding: 25px;
@@ -184,15 +261,17 @@
             .hero-text h1 {
                 font-size: 40px;
             }
+
+            .project-card {
+                text-align: center;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- ==============================
-         NAVIGATION
-    =============================== -->
+    <!-- NAVIGATION -->
 
     <nav>
 
@@ -202,17 +281,14 @@
 
         <div class="nav-buttons">
 
-            <!-- LOGIN -->
             <a href="/login">
                 Login
             </a>
 
-            <!-- REGISTER -->
             <a href="/register" class="register">
                 Register
             </a>
 
-            <!-- START LEARNING -->
             <a href="/login">
                 Start Learning
             </a>
@@ -222,9 +298,7 @@
     </nav>
 
 
-    <!-- ==============================
-         HERO SECTION
-    =============================== -->
+    <!-- HERO SECTION -->
 
     <section class="hero">
 
@@ -240,15 +314,11 @@
                 and preparing for exams.
             </p>
 
-            <!-- START LEARNING -->
             <a href="/login" class="start-btn">
                 Start Learning →
             </a>
 
         </div>
-
-
-        <!-- AI CARD -->
 
         <div class="hero-card">
 
@@ -275,9 +345,7 @@
     </section>
 
 
-    <!-- ==============================
-         FEATURES
-    =============================== -->
+    <!-- FEATURES -->
 
     <section class="features">
 
@@ -285,87 +353,93 @@
             What StudyMeta AI Offers
         </h2>
 
-
         <div class="feature-container">
 
-
-            <!-- FEATURE 1 -->
-
             <div class="feature">
-
-                <h3>
-                    🤖 AI Answers
-                </h3>
-
-                <p>
-                    Get quick explanations for your study questions.
-                </p>
-
+                <h3>🤖 AI Answers</h3>
+                <p>Get quick explanations for your study questions.</p>
             </div>
 
-
-            <!-- FEATURE 2 -->
-
             <div class="feature">
-
-                <h3>
-                    📚 Study Notes
-                </h3>
-
-                <p>
-                    Create simple and useful study notes.
-                </p>
-
+                <h3>📚 Study Notes</h3>
+                <p>Create simple and useful study notes.</p>
             </div>
 
-
-            <!-- FEATURE 3 -->
-
             <div class="feature">
-
-                <h3>
-                    📝 Exam Focus
-                </h3>
-
-                <p>
-                    Understand concepts in an exam-friendly way.
-                </p>
-
+                <h3>📝 Exam Focus</h3>
+                <p>Understand concepts in an exam-friendly way.</p>
             </div>
 
-
-            <!-- FEATURE 4 -->
-
             <div class="feature">
-
-                <h3>
-                    📊 History
-                </h3>
-
-                <p>
-                    Keep track of your previous questions and answers.
-                </p>
-
+                <h3>📊 History</h3>
+                <p>Keep track of your previous questions and answers.</p>
             </div>
-
 
         </div>
 
     </section>
 
 
-    <!-- ==============================
-         FOOTER
-    =============================== -->
+    <!-- PROJECTS -->
+
+    <section class="projects">
+
+        <h2>🚀 My Project</h2>
+
+        <div class="project-card">
+
+            <h3>📚 Study Meta AI</h3>
+
+            <p>
+                Study Meta AI is an AI-powered study assistant designed
+                to help students understand difficult academic concepts
+                through simple, quick and exam-oriented answers and notes.
+            </p>
+
+            <div class="tech">
+
+                <span>Python</span>
+                <span>Flask</span>
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>JavaScript</span>
+                <span>PostgreSQL</span>
+                <span>Gemini AI</span>
+
+            </div>
+
+            <div class="project-buttons">
+
+                <a
+                    href="https://github.com/sakshishelke281-ctrl/study-meta-ai"
+                    target="_blank"
+                    class="github-btn">
+                    GitHub
+                </a>
+
+                <a
+                    href="https://study-meta-ai.onrender.com"
+                    target="_blank"
+                    class="live-btn">
+                    Live Demo →
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
 
     <footer>
 
         <p>
-            © 2026 StudyMeta AI | Smart Learning Assistant
+            © 2026 Sakshi Shelke | StudyMeta AI
         </p>
 
     </footer>
-
 
 </body>
 </html>
